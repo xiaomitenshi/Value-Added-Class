@@ -2,9 +2,9 @@ library(rvest)
 library(dplyr)
 library(robotstxt)
 
-path = paths_allowed("https://www.imdb.com/search/title/?groups=top_250&sort=user_rating")
+path = paths_allowed("https://books.toscrape.com/")
 
-link <- 'https://www.imdb.com/search/title/?groups=top_250&sort=user_rating'
+link <- 'https://books.toscrape.com/'
 
 web <- read_html(link)
 
@@ -20,11 +20,11 @@ year <- web %>% html_nodes(".text-muted.unbold") %>% html_text
 View(year)
 
 rating <- web %>%
-  html_nodes(".ratings-imdb-rating strong")
+  html_nodes(".science-fiction strong")
 
 View(rating)
 
-duration <- web %>% html_nodes(".runtime")
+duration <- web %>% html_nodes(".author")
 
 View(duration)
 
@@ -32,4 +32,4 @@ imdb.ratings <- data.fram(name, year, rating, duration)
 
 View(imdb.ratings)
 
-write.csv(imdb.ratings, "Mymovieda.csv")
+write.csv(imdb.ratings, "Mybooks.csv")
