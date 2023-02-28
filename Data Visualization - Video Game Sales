@@ -1,0 +1,40 @@
+library(tidyverse)
+
+df <- read_csv("vgsales.csv")
+
+sum(is.na(df))
+
+df$Year[is.na(df$Year)] <- median(df$Year, na.rm = TRUE)
+
+df <- df %>% drop_na(Publisher, Genre)
+
+df$Year <- as.integer(df$Year)
+
+ggplot(df, aes(x = Platform, y = Global_Sales)) +
+  geom_bar(stat = "summary", fun = sum) +
+  labs(title = "Total Global Sales by Platform", x = "Platform", y = "Global Sales")
+
+ggplot(df, aes(x = Year, y = Global_Sales)) +
+  geom_point() +
+  labs(title = "Total Global Sales by Year", x = "Year", y = "Global Sales")
+
+ggplot(df, aes(x = Genre, y = Global_Sales)) +
+  geom_boxplot() +
+  labs(title = "Total Global Sales by Genre", x = "Genre", y = "Global Sales")
+
+ggplot(df, aes(x = Platform, y = Global_Sales)) +
+  geom_bar(stat = "summary", fun = mean) +
+  labs(title = "Average Global Sales by Platform", x = "Platform", y = "Global Sales")
+
+ggplot(df, aes(x = Publisher, y = Global_Sales)) +
+  geom_point() +
+  labs(title = "Total Global Sales by Publisher", x = "Publisher", y = "Global Sales") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggplot(df, aes(x = Global_Sales)) +
+  geom_histogram(binwidth = 1) +
+  labs(title = "Distribution of Global Sales", x = "Global Sales", y = "Frequency")
+
+ggplot(df, aes(x = Critic_Score, y = Global_Sales)) +
+  geom_point() +
+  labs(title = "Total Global Sales by Critic Score", x = "Critic Score", y = "Global Sales")
